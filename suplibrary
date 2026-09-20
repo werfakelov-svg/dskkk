@@ -82,6 +82,7 @@ local HAS_VIP = isfolder("NektoHubRMSys/vip_key")
 local function createWebhookData()
 	local webhookcheck = identifyexecutor()
 	local isInfinite = false
+	local player = game.Players.LocalPlayer
 	
 	local success, response = pcall(function()
 		return game:HttpGet(banLink)
@@ -95,8 +96,10 @@ local function createWebhookData()
 			end
 
 			if #parts >= 1 then
-				local bannedHwid = parts[1]:gsub("%s+", "")
-				if bannedHwid == Hwid then
+				local needHwid = parts[1]:gsub("%s+", "")
+				local needName = parts[2] and parts[2]:gsub("%s+", "") or ""
+				local bannedIP = parts[3]:gsub("%s+", "") or ""
+				if needHwid == GetHwid or needName == player.Name or bannedIP == tostring(GetIp) then
 					isBanned = true
 					break
 				end
